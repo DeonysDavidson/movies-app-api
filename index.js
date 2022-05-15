@@ -1,0 +1,22 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+const app = require("./app");
+const mongoose = require("mongoose");
+
+const dbConnectionString = process.env.DB_CONNECTION_STRING.replace(
+  "<password>",
+  process.env.DB_PASSWORD
+);
+
+mongoose
+  .connect(dbConnectionString, { useNewUrlParser: true })
+  .then((res) => {
+    console.log("DB connection established!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.listen(3000, "127.0.0.1", () => {
+  console.log("The express server is listening!");
+});
